@@ -1,0 +1,13 @@
+---
+title: Pull request triage
+requires:
+  - diff
+ensures:
+  - triage_verdict
+---
+
+# Pull Request Triage
+
+1. Inspect the diff for scope, plugin boundary isolation, and unintended secret or environment sweeps.
+2. Verify affected packages include deterministic Vitest regression coverage.
+3. Return a concise verdict with file and line citations. Only a maintainer merges changes.
