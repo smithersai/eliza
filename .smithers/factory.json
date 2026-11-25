@@ -1,0 +1,65 @@
+{
+  "summary": "Example fork factory for smithersai/eliza (upstream elizaOS/eliza). Runs plugin checks, issue reproduction, and PR triage strictly inside isolated Cloudflare Sandboxes.",
+  "flows": [
+    {
+      "id": "issue/repro",
+      "description": "Reproduce a reported plugin or runtime defect inside an isolated Cloudflare Sandbox using filtered Vitest runs before proposing a fix.",
+      "summary": "Reproduce one issue in an isolated Cloudflare Sandbox with a targeted Vitest case.",
+      "featured": true,
+      "kind": "mdx",
+      "path": ".smithers/flows/issue/repro/flow.mdx",
+      "capabilities": [
+        "fs:read:**",
+        "proc:spawn:rg *",
+        "proc:spawn:pnpm --filter * test*"
+      ],
+      "model": "repository/research",
+      "modelInvocable": true,
+      "flows": [],
+      "budget": {
+        "tokens": 48000,
+        "milliseconds": 600000
+      }
+    },
+    {
+      "id": "pr-triage",
+      "description": "Review a contributed pull request for plugin boundary isolation, secret hygiene, TypeScript strictness, and Vitest coverage from its diff alone.",
+      "summary": "Triage a pull request diff for boundary safety, secret hygiene, and test coverage.",
+      "featured": true,
+      "kind": "mdx",
+      "path": ".smithers/flows/pr-triage/flow.mdx",
+      "capabilities": [
+        "fs:read:**",
+        "proc:spawn:rg *"
+      ],
+      "model": "repository/research",
+      "modelInvocable": true,
+      "flows": [],
+      "budget": {
+        "tokens": 32000,
+        "milliseconds": 300000
+      }
+    },
+    {
+      "id": "checks/sandbox-check",
+      "description": "Run affected Vitest, TypeScript, ESLint, and Knip checks strictly inside an isolated Cloudflare Sandbox with zero host secrets.",
+      "summary": "Run affected Vitest, TypeScript, and lint checks in an isolated sandbox.",
+      "featured": true,
+      "kind": "mdx",
+      "path": ".smithers/flows/checks/sandbox-check/flow.mdx",
+      "capabilities": [
+        "fs:read:**",
+        "proc:spawn:pnpm --filter * test*",
+        "proc:spawn:pnpm exec tsc --noEmit",
+        "proc:spawn:pnpm exec eslint *"
+      ],
+      "model": null,
+      "modelInvocable": true,
+      "flows": [],
+      "budget": {
+        "tokens": 24000,
+        "milliseconds": 600000
+      }
+    }
+  ]
+}
