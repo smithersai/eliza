@@ -1,0 +1,47 @@
+{
+  "sections": [
+    {
+      "title": "Example fork notice",
+      "audience": "visitor",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "This repository is a smithersai/ example fork of upstream https://github.com/elizaOS/eliza. All workflows run strictly inside isolated Cloudflare Sandboxes with zero host credentials."
+        }
+      ]
+    },
+    {
+      "title": "Today",
+      "audience": "maintainer",
+      "blocks": [
+        {
+          "type": "issues"
+        },
+        {
+          "type": "stack"
+        },
+        {
+          "type": "runs"
+        },
+        {
+          "type": "flows",
+          "title": "Factory flows"
+        }
+      ]
+    },
+    {
+      "title": "Contribute",
+      "audience": "contributor",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Upstream project: https://github.com/elizaOS/eliza. Run tests and checks inside an isolated container sandbox using Node 26, pnpm, and Vitest."
+        },
+        {
+          "type": "flows",
+          "title": "Available workflows"
+        }
+      ]
+    }
+  ]
+}
