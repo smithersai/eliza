@@ -1,0 +1,13 @@
+---
+title: Isolated sandbox check
+requires:
+  - changed_files
+ensures:
+  - check_receipt
+---
+
+# Isolated Sandbox Check
+
+1. Identify affected workspace packages under `packages/` from the changed file list.
+2. Execute targeted `pnpm --filter <pkg> test`, TypeScript typecheck, and ESLint strictly inside an isolated Cloudflare Sandbox.
+3. Return exact exit codes and failing test names if any check fails.
