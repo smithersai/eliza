@@ -1,13 +1,17 @@
 ---
-title: Isolated sandbox check
-requires:
-  - changed_files
-ensures:
-  - check_receipt
+description: "Run affected Vitest, TypeScript, ESLint, and Knip checks strictly inside an isolated Cloudflare Sandbox with zero host secrets."
+capabilities:
+  - "fs:read:**"
+  - "proc:spawn:pnpm --filter * test*"
+  - "proc:spawn:pnpm exec tsc --noEmit"
+  - "proc:spawn:pnpm exec eslint *"
+budget:
+  tokens: 24000
+  milliseconds: 600000
 ---
 
-# Isolated Sandbox Check
+All verification runs strictly inside an isolated Cloudflare Sandbox (`cfbox`) with zero host credentials, zero host caches, and zero local checkouts.
 
-1. Identify affected workspace packages under `packages/` from the changed file list.
-2. Execute targeted `pnpm --filter <pkg> test`, TypeScript typecheck, and ESLint strictly inside an isolated Cloudflare Sandbox.
-3. Return exact exit codes and failing test names if any check fails.
+1. Map changed files to their owning workspace packages under `packages/`.
+2. Run targeted `pnpm --filter <pkg> test`, `pnpm exec tsc --noEmit`, and `pnpm exec eslint` on the affected files inside the sandbox.
+3. Report exact exit codes, timing, and failing test names; never pass or swallow non-zero exits.
